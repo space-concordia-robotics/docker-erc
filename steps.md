@@ -19,6 +19,11 @@ The url is found under fleet>ERC>leorover>settings>installation. Only copy the h
 docker build -t erc_img --build-arg FREEDOM_URL="<YOUR_URL>" .
 ``` 
 
+## Allow docker user to connect to X window display
+```
+xhost +local:root
+```
+
 ## Launch the image 
 ### With Nvidia GPU:
 Install the [Nvidia Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
