@@ -10,6 +10,10 @@ RUN apt-get update && apt-get -y install \
   ros-melodic-cv-bridge \
   ros-melodic-tf \
   python-pip python3-pip \
+  python-rosdep \
+  python-catkin-tools \
+  python-vcstool \
+  ros-melodic-xacro \
   && rm -rf /var/lib/apt/lists/*
 
 # Set root password
@@ -31,11 +35,15 @@ RUN apt-get update && apt-get install -y python-catkin-tools \
 
 # Copy packages and build the workspace
 WORKDIR /catkin_ws
+COPY leo-erc.repos ./
 COPY src ./src
+RUN vcs import < leo-erc.repos
+
 RUN apt-get update \
   && rosdep update \
   && rosdep install --from-paths src -iy \
   && rm -rf /var/lib/apt/lists/*
+
 RUN catkin config --extend /opt/ros/melodic && catkin build
 
 COPY start.sh /
