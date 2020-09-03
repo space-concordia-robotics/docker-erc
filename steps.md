@@ -5,14 +5,6 @@
 git clone https://github.com/space-concordia-robotics/erc_docker_img.git
 ```
 
-## Run these
-```
-sudo rosdep init
-rosdep update
-rosdep install --from-paths src --ignore-src
-catkin_make
-```
-
 ## Build the docker image (this will take a while). 
 The url is found under fleet>ERC>leorover>settings>installation. Only copy the https string **not the whole thing**.
 ```
