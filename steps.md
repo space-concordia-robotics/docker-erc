@@ -21,8 +21,7 @@ xhost +local:root
 Install the [Nvidia Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
 And run:
 ```
-docker run --rm -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY --gpus all -e NVID
-IA_DRIVER_CAPABILITIES=all --name erc_img erc_img
+docker run --rm -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY --gpus all -e NVIDIA_DRIVER_CAPABILITIES=all --name erc_img erc_img
 ```
 
 ### With intergrated graphics:
