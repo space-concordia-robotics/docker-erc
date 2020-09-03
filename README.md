@@ -9,7 +9,7 @@ This example image starts the Freedom agent which connects to your account at [F
 
 Login to the [Freedom Robotics App](https://app.freedomrobotics.ai/), click on **Add Device** -> **Quick Create** and copy the URL address from the command (not the whole command).
 
-Now execute the following command as the `root` user (replace `<YOUR_URL>` with the address you copied):
+Now execute the following command as the `root` user (replace `<YOUR_URL>` with the address from Freedom Robotics Space Concordia Robotics > LeoRover > Settings  > Installation > use the URL not the full command):
 ```
 docker build -t erc_img --build-arg FREEDOM_URL="<YOUR_URL>" .
 ```
