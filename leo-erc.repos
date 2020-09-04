@@ -19,3 +19,7 @@ repositories:
     type: git
     url: https://github.com/fictionlab/marsyard.git
     version: master
+  src/xarco:
+    type: git
+    url: https://github.com/ros/xacro.git
+    version: melodic-devel
