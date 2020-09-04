@@ -1,0 +1,16 @@
+<package format="2">
+  <name>map_publisher</name>
+  <version>0.0.0</version>
+  <description>
+    An package that publishes a map for Freedom Robotics
+  </description>
+
+  <maintainer>SpaceConcordia Robotics</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+
+</package>
