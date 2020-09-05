@@ -14,6 +14,7 @@ RUN apt-get update && apt-get -y install \
   python-catkin-tools \
   python-vcstool \
   ros-melodic-xacro \
+  ros-melodic-map-server \
   && rm -rf /var/lib/apt/lists/*
 
 # Set root password
@@ -37,6 +38,7 @@ RUN apt-get update && apt-get install -y python-catkin-tools \
 WORKDIR /catkin_ws
 COPY leo-erc.repos ./
 COPY src ./src
+COPY map ./map
 RUN vcs import < leo-erc.repos
 
 RUN apt-get update \
