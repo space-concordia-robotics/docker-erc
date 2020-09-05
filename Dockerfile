@@ -48,5 +48,7 @@ RUN catkin config --extend /opt/ros/melodic && catkin build
 
 COPY start.sh /
 
+RUN apt update && apt upgrade -y && apt install vim -y
+
 ENTRYPOINT []
 CMD ["/start.sh"]
