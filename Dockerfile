@@ -53,5 +53,24 @@ COPY start.sh /
 
 RUN apt update && apt upgrade -y && apt install vim -y
 
+
 ENTRYPOINT []
 CMD ["/start.sh"]
+
+# allow for AR tags to be inserted into the gazebo world sim
+
+## install dependencies for gazebo_models generation
+RUN apt-get install imagemagick -y
+
+## do the thing
+### HACKY --> ammend later (maybe)
+RUN mkdir -p /root/.gazebo/models \
+  && cp -r /catkin_ws/src/gazebo_models/ar_tags/model/marker0/ /root/.gazebo/models/ \ 
+ && cd /catkin_ws/src/gazebo_models/ar_tags/images \
+  && mv Marker0.png t \
+  && mkdir -p /root/temp \
+  && mv Marker* /root/temp \
+  && mv t Marker0.png \
+  && cd ../scripts/ \
+  && ./generate_markers_model.py -i ../images/ -s 125 -w 37
+
