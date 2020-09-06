@@ -15,8 +15,13 @@ RUN apt-get update && apt-get -y install \
   python-vcstool \
   ros-melodic-xacro \
   ros-melodic-map-server \
+  ros-melodic-ar-track-alvar \
+  ros-melodic-rqt-graph \
+  sl \
   && rm -rf /var/lib/apt/lists/*
-  #ros-melodic-ar-track-alvar \
+
+# ALIASES :D
+RUN alias ..="cd .."
 
 # Set root password
 RUN echo 'root:root' | chpasswd
