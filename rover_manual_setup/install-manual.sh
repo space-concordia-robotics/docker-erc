@@ -11,7 +11,11 @@ apt-get update && apt-get -y install \
   python-catkin-tools \
   python-vcstool \
   ros-melodic-xacro \
-  ros-melodic-map-server
+  ros-melodic-map-server \
+  ros-melodic-ar-track-alvar \
+  ros-melodic-rqt-graph \
+  sl \
+  && rm -rf /var/lib/apt/lists/*
 
 # Clone required repos
 cd /catkin_ws
