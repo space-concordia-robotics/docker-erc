@@ -16,6 +16,7 @@ RUN apt-get update && apt-get -y install \
   ros-melodic-xacro \
   ros-melodic-map-server \
   && rm -rf /var/lib/apt/lists/*
+  #ros-melodic-ar-track-alvar \
 
 # Set root password
 RUN echo 'root:root' | chpasswd
