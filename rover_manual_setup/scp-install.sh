@@ -14,4 +14,5 @@ fi
 
 echo "Password is root. If it doesn't work, you might need to enable SSH on FreedomRobotics. Make sure the port is correct."
 
-ssh root@$2.tunnel.freedomrobotics.ai -p $1 git clone https://github.com/space-concordia-robotics/erc_docker_img && . erc_docker_img/rover_manual_setup/install-manual.sh
+scp -P $1 -r install-manual.sh root@$2.tunnel.freedomrobotics.ai:/catkin_ws/
+ssh root@$2.tunnel.freedomrobotics.ai -p $1 . /catkin_ws/install-manual.sh
