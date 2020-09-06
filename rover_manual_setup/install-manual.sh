@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Copy required files to catkin workspace
+cp -r ~/erc_docker_img/src /catkin_ws/src
+cp -r ~/erc_docker_img/map /catkin_ws/map
+cp -r ~/erc_docker_img/leo-erc.repos /catkin_ws/
+
 # Install some basic dependencies
 apt-get update && apt-get -y install \
   python-rosdep \
