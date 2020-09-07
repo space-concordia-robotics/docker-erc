@@ -62,8 +62,6 @@ COPY start.sh /
 RUN apt update && apt upgrade -y && apt install vim -y
 
 
-ENTRYPOINT []
-CMD ["/start.sh"]
 
 # allow for AR tags to be inserted into the gazebo world sim
 
@@ -86,3 +84,5 @@ RUN mkdir -p /root/.gazebo/models \
   && ./generate_markers_model.py -i ../images/ -s 125 -w 37 \
   && cp -r /root/.gazebo/models/marker0 /catkin_ws/src/marsyard/models/ 
 
+ENTRYPOINT []
+CMD ["/start.sh"]
