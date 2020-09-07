@@ -1,16 +1,12 @@
 #!/usr/bin/env python2
-# Importing cv2
-import rospy
 import sys
+
+import rospy
 import cv2
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 
-## START: --------REMOVE--------------
-# Path to the local image
-#path = 'ar_test.png'
-## END: --------REMOVE--------------
 class arTrackerDemo():
     def __init__(self):
         # necessary for handling images from topics
@@ -25,7 +21,12 @@ class arTrackerDemo():
 
         # subscribe to the camera image and depth topics and set
         # the appropriate callbacks
-        self.image_sub = rospy.Subscriber('/suhdude/image_raw', Image, self.image_callback)
+        self.image_sub = rospy.Subscriber('/camera/image_raw', Image, self.image_callback)
+
+        # create publisher for new feed with overlay
+        self.image_pub = rospy.Publisher('/camera/image_ar', Image, queue_size=10)
+
+        rate = rospy.Rate(1) # 1hz, take it easy 8-)
 
         rospy.loginfo('Waiting for image topics...')
 
@@ -33,7 +34,7 @@ class arTrackerDemo():
         # use cv_bridge() to convert the ROS image to OpenCV format
         try:
             frame = self.bridge.imgmsg_to_cv2(ros_image, 'bgr8')
-            print('frame', frame)
+            #print('frame', frame)
         except CvBridgeError:
             traceback.print_exc()
 
@@ -41,7 +42,7 @@ class arTrackerDemo():
         # require numpy arrays
         frame = np.array(frame, dtype=np.uint8)
 
-        print('np_frame', frame)
+        #print('np_frame', frame)
 
         # Starting coordinate, here (100, 100)
         # Represents the top left corner of rectangle
@@ -60,12 +61,8 @@ class arTrackerDemo():
         # Draw a rectangle with blue line borders of thickness of 2 px
         image = cv2.rectangle(frame, starting_point, ending_point, color, thickness)
 
-        print('image', image)
-
-        # Saving the image
-        success = cv2.imwrite('post_ar_test.png', image)
-
-        print('success', success)
+        # Publish the new overlay including image to topic '/camera/image_ar'
+        self.image_pub.publish(self.bridge.cv2_to_imgmsg(image))
 
     def cleanup(self):
         print('shutting down ar_tracker node')

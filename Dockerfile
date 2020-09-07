@@ -63,6 +63,7 @@ RUN apt update && apt upgrade -y && apt install vim -y
 
 
 
+# ===================== AR TAGS ===========================
 # allow for AR tags to be inserted into the gazebo world sim
 
 ## install dependencies for gazebo_models generation
