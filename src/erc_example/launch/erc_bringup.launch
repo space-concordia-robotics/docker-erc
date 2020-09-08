@@ -1,7 +1,12 @@
 <launch>
 
-  <node name="image_saver" 
+  <node name="image_saver"
         pkg="erc_example"
         type="image_saver.py"/>
+
+  <node name="map_server"
+        pkg="map_server"
+        type="map_server"
+        args="/catkin_ws/map/map.yaml"/>
 
 </launch>
