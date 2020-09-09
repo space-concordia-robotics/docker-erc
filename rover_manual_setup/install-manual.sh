@@ -9,6 +9,10 @@ cp -r erc_docker_img/leo-erc.repos /catkin_ws/
 
 # Install some basic dependencies
 apt-get update && apt-get -y install \
+  curl ssh \
+  ros-melodic-cv-bridge \
+  ros-melodic-tf \
+  python-pip python3-pip \
   python-rosdep \
   python-catkin-tools \
   python-vcstool \
