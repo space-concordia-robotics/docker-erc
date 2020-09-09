@@ -37,7 +37,6 @@ class arTrackerDemo():
         rospy.loginfo('Waiting for image topics...')
 
     def ar_track_alvar_callback(self, ar_pose_marker):
-        #print('ar_pose_marker', ar_pose_marker.markers)
         if ar_pose_marker.markers:
             self.is_marker_seen = True
         else:
@@ -47,7 +46,6 @@ class arTrackerDemo():
         # use cv_bridge() to convert the ROS image to OpenCV format
         try:
             frame = self.bridge.imgmsg_to_cv2(ros_image, 'bgr8')
-            #print('frame', frame)
         except CvBridgeError:
             traceback.print_exc()
 
@@ -55,11 +53,9 @@ class arTrackerDemo():
         # require numpy arrays
         frame = np.array(frame, dtype=np.uint8)
 
-        print('frame.shape', frame.shape)
         shape = frame.shape
         height = shape[0]
         width = shape[1]
-        #print('np_frame', frame)
 
         # Starting coordinate
         # Represents the top left corner of rectangle
