@@ -4,6 +4,7 @@ import sys
 import rospy
 import cv2
 from sensor_msgs.msg import Image, CameraInfo
+from ar_track_alvar_msgs.msg import AlvarMarkers
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 
@@ -12,6 +13,8 @@ class arTrackerDemo():
         # necessary for handling images from topics
         self.node_name = 'ar_tracker'
         rospy.init_node(self.node_name)
+
+        self.is_marker_seen = False
 
         # what we do during shutdown
         rospy.on_shutdown(self.cleanup)
@@ -23,12 +26,22 @@ class arTrackerDemo():
         # the appropriate callbacks
         self.image_sub = rospy.Subscriber('/camera/image_raw', Image, self.image_callback)
 
+        # subscribe to ar_track_alvar marker messages
+        self.ar_track_marker_sub = rospy.Subscriber('/ar_pose_marker', AlvarMarkers, self.ar_track_alvar_callback)
+
         # create publisher for new feed with overlay
         self.image_pub = rospy.Publisher('/camera/image_ar', Image, queue_size=10)
 
         rate = rospy.Rate(1) # 1hz, take it easy 8-)
 
         rospy.loginfo('Waiting for image topics...')
+
+    def ar_track_alvar_callback(self, ar_pose_marker):
+        #print('ar_pose_marker', ar_pose_marker.markers)
+        if ar_pose_marker.markers:
+            self.is_marker_seen = True
+        else:
+            self.is_marker_seen = False
 
     def image_callback(self, ros_image):
         # use cv_bridge() to convert the ROS image to OpenCV format
@@ -42,18 +55,26 @@ class arTrackerDemo():
         # require numpy arrays
         frame = np.array(frame, dtype=np.uint8)
 
+        print('frame.shape', frame.shape)
+        shape = frame.shape
+        height = shape[0]
+        width = shape[1]
         #print('np_frame', frame)
 
-        # Starting coordinate, here (100, 100)
+        # Starting coordinate
         # Represents the top left corner of rectangle
-        starting_point = (100, 100)
+        starting_point = (width/2 - width/5, height/2 - height/5)
 
-        # Ending coordinate, here (400, 400)
+        # Ending coordinate
         # Represents the bottom right corner of rectangle
-        ending_point = (300, 300)
+        ending_point = (width/2 + width/5, height/2 + width/5)
 
-        # Blue color in BGR
-        color = (255, 0, 0)
+        if self.is_marker_seen:
+            # Green color in BGR
+            color = (0, 255, 0)
+        else:
+            # Red color in BGR
+            color = (0, 0, 255)
 
         # Line thickness of 2 px
         thickness = 2
@@ -76,3 +97,4 @@ def main(args):
 
 if __name__ == '__main__':
     main(sys.argv)
+

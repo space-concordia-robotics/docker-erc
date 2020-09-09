@@ -8,7 +8,7 @@
 
     <include>
       <uri>model://marker0</uri>
-	  <pose>-1.018290 -0.852121 1 0 0 0</pose>
+	  <pose>0.786 -0.023134 0.1 0 0 0</pose>
     </include>
     
 	<scene>

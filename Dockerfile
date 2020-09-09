@@ -82,7 +82,7 @@ RUN mkdir -p /root/.gazebo/models \
   && mv Marker* /root/temp \
   && mv t Marker0.png \
   && cd ../scripts/ \
-  && ./generate_markers_model.py -i ../images/ -s 125 -w 37 \
+  && ./generate_markers_model.py -i ../images/ -s 146 -w 25 \
   && cp -r /root/.gazebo/models/marker0 /catkin_ws/src/marsyard/models/ 
 
 ENTRYPOINT []
