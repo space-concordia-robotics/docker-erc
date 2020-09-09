@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git clone https://github.com/space-concordia-robotics/erc_docker_img
+git clone https://github.com/space-concordia-robotics/docker-erc.git
 
 # Copy required files to catkin workspace
 cp -r erc_docker_img/src/* /catkin_ws/src/
