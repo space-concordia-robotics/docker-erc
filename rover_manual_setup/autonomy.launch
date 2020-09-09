@@ -1,0 +1,4 @@
+<launch>
+    <include file="$(find webcam_ar_track)/launch/webcam_indiv.launch"/>
+    <node pkg="camera_vision" type="ar_tracker.py" name="ar_tracker" output="screen"/>
+</launch>

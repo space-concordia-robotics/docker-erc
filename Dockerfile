@@ -87,3 +87,4 @@ RUN mkdir -p /root/.gazebo/models \
 
 ENTRYPOINT []
 CMD ["/start.sh"]
+
