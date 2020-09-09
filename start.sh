@@ -10,8 +10,12 @@ python /root/.local/lib/python2.7/site-packages/freedomrobotics/agent.py &
 
 roslaunch erc_example erc_bringup.launch &
 
+
 # CUSTOM SCRIPTS GO HERE
+# NOTE: YOU GOTTA LET SHIT SLEEP IN BETWEEN SO THAT IT ACTUALLY WORKS
+sleep 2
 roslaunch webcam_ar_track webcam_indiv.launch &
+sleep 2
 rosrun camera_vision ar_tracker.py &
 
 fg %1
