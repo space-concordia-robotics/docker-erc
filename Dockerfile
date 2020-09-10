@@ -34,7 +34,7 @@ ARG FREEDOM_URL
 RUN curl -sSf $FREEDOM_URL | \
   sed 's:a/nmkK3DkqZEB/ngrok-2.2.8-linux-arm64.zip:c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip:' | python \
   && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /root/.cache/pip/* 
+  && rm -rf /root/.cache/pip/*
 
 # Install catkin-tools
 RUN apt-get update && apt-get install -y python-catkin-tools \
@@ -47,6 +47,7 @@ COPY src ./src
 COPY map ./map
 RUN vcs import < leo-erc.repos
 COPY launch ./launch
+COPY controllers.yaml ./src/leo_gazebo/config/
 
 RUN apt-get update \
   && rosdep update \
@@ -73,7 +74,7 @@ COPY ar_tags/marsyard.world ./src/marsyard/worlds/
 ### HACKY --> ammend later (maybe)
 
 RUN mkdir -p /root/.gazebo/models \
-  && cp -r /catkin_ws/src/gazebo_models/ar_tags/model/marker0/ /root/.gazebo/models \ 
+  && cp -r /catkin_ws/src/gazebo_models/ar_tags/model/marker0/ /root/.gazebo/models \
   && cd /catkin_ws/src/gazebo_models/ar_tags/images \
   && mv Marker0.png t \
   && mkdir -p /root/temp \
@@ -81,10 +82,9 @@ RUN mkdir -p /root/.gazebo/models \
   && mv t Marker0.png \
   && cd ../scripts/ \
   && ./generate_markers_model.py -i ../images/ -s 146 -w 25 \
-  && cp -r /root/.gazebo/models/marker0 /catkin_ws/src/marsyard/models/ 
+  && cp -r /root/.gazebo/models/marker0 /catkin_ws/src/marsyard/models/
 
 COPY octomap/terrain_mapping.launch /catkin_ws/src/octomap_mapping/octomap_server/launch/
 
 ENTRYPOINT []
 CMD ["/start.sh"]
-
