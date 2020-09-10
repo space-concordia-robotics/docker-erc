@@ -46,9 +46,7 @@ COPY leo-erc.repos ./
 COPY src ./src
 COPY map ./map
 RUN vcs import < leo-erc.repos
-
-# maybe useful, but not necessary for now ...
-#COPY launch/marsyard_ar.launch ./src/leo_gazebo/launch
+COPY launch ./launch
 
 RUN apt-get update \
   && rosdep update \
