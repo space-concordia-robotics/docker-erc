@@ -9,13 +9,10 @@ import numpy as np
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-map', help='path to map')
-parser.add_argument('-x', help='add to x offset')
-parser.add_argument('-y', help='add to y offset')
+parser.add_argument('-map', help='path to map file (.jpg image)')
+parser.add_argument('-x', help='add meters to x offset')
+parser.add_argument('-y', help='add meters to y offset')
 args = parser.parse_args()
-
-print(dir(args))
-
 
 
 # magic number calculated from the min max offset of the waypoints given for ERC2020
@@ -25,7 +22,7 @@ else:
     x_offset = 2.53/2.0
 
 if args.y:
-    y_offset = (30.06+13.24)/2.0+float(args.y)
+    y_offset = (30.06+13.24)/2.0-float(args.y)
 else:
     y_offset = (30.06+13.24)/2.0
 
@@ -35,17 +32,15 @@ MARSYARD_HEIGHT = 43.3
 
 def convert_coordinates(coordinates, frame):
 
-    x = float(coordinates[0])
-    y = float(coordinates[1])
-    print('------------INPUT--------------')
-    print('x:', x)
-    print('y:', y)
-    x = (x+x_offset)/(MARSYARD_WIDTH) * width
-    y = (y+y_offset)/(MARSYARD_HEIGHT) * height
-    print('------------OUTPUT--------------')
-    print('x', x)
-    print('y', y)
-    return (int(x),int(y))
+    x_m = float(coordinates[0])
+    y_m = float(coordinates[1])
+    x = int((x_m+x_offset)/(MARSYARD_WIDTH) * width)
+    y = int((y_offset-y_m)/(MARSYARD_HEIGHT) * height)
+    print('------------CONVERSION-------------')
+    print('x: {:-1} m -> {:-1} px'.format(x_m, x))
+    print('y: {:-1} m -> {:-1} px'.format(y_m, y))
+    print()
+    return (x,y)
 
 def draw_circles(img, coordinates):
 
@@ -63,7 +58,7 @@ def draw_circles(img, coordinates):
 
     count = 0
 
-    for item in sorted (coordinates.items()):
+    for item in (coordinates.items()):
             
             # Print different color for start
             if count == 0:
@@ -151,6 +146,9 @@ center_coordinates = (mid_x, mid_y)
 with open('data.json', 'r') as f:
     datastore = json.load(f)
 
+# draw waypoints with label
 img = draw_circles(img, datastore)
+
+# draw grid on map with scale
 draw_grid(img)
 
