@@ -47,7 +47,7 @@ COPY src ./src
 COPY map ./map
 RUN vcs import < leo-erc.repos
 COPY launch ./launch
-COPY controllers.yaml ./src/leo_gazebo/config/
+#COPY controllers.yaml ./src/leo_gazebo/config/
 
 RUN apt-get update \
   && rosdep update \

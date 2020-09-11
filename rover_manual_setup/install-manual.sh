@@ -22,7 +22,7 @@ apt-get update && apt-get -y install \
   ros-melodic-ar-track-alvar \
   ros-melodic-rqt-graph \
   sl \
-  imagemagick \
+  #imagemagick \
   && rm -rf /var/lib/apt/lists/*
 
 # Clone required repos
@@ -30,7 +30,7 @@ cd /catkin_ws
 vcs import < leo-erc.repos
 
 # Copy required files to cloned repos
-cp -r docker-erc/controllers.yaml /catkin_ws/src/leo_gazebo/config/
+#cp -r docker-erc/controllers.yaml /catkin_ws/src/leo_gazebo/config/
 
 # Rebuild workspace
 rm -rf build/ devel/
