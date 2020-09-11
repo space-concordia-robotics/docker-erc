@@ -1,9 +1,4 @@
 #!/bin/bash
-# arg1: github username
-# arg2: github email
-
-git config --global user.name "$1"
-git config --global user.email "$2"
 
 git clone https://github.com/space-concordia-robotics/docker-erc.git
 
@@ -11,8 +6,6 @@ git clone https://github.com/space-concordia-robotics/docker-erc.git
 cp -r docker-erc/src/* /catkin_ws/src/
 cp -r docker-erc/map /catkin_ws/map
 cp -r docker-erc/leo-erc.repos /catkin_ws/
-cp -r docker-erc/controllers.yaml /catkin_ws/src/leo_gazebo/config/
-cp -r docker-erc/octomap/terrain_mapping.launch /catkin_ws/src/octomap_mapping/octomap_server/launch/
 
 # Install some basic dependencies
 apt-get update && apt-get -y install \
@@ -34,6 +27,10 @@ apt-get update && apt-get -y install \
 # Clone required repos
 cd /catkin_ws
 vcs import < leo-erc.repos
+
+# Copy required files to cloned repos
+cp -r docker-erc/controllers.yaml /catkin_ws/src/leo_gazebo/config/
+cp -r docker-erc/octomap/terrain_mapping.launch /catkin_ws/src/octomap_mapping/octomap_server/launch/
 
 # Rebuild workspace
 rm -rf build/ devel/
