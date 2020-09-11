@@ -84,7 +84,5 @@ RUN mkdir -p /root/.gazebo/models \
   && ./generate_markers_model.py -i ../images/ -s 146 -w 25 \
   && cp -r /root/.gazebo/models/marker0 /catkin_ws/src/marsyard/models/
 
-COPY octomap/terrain_mapping.launch /catkin_ws/src/octomap_mapping/octomap_server/launch/
-
 ENTRYPOINT []
 CMD ["/start.sh"]

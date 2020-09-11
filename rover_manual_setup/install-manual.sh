@@ -31,7 +31,6 @@ vcs import < leo-erc.repos
 
 # Copy required files to cloned repos
 cp -r docker-erc/controllers.yaml /catkin_ws/src/leo_gazebo/config/
-cp -r docker-erc/octomap/terrain_mapping.launch /catkin_ws/src/octomap_mapping/octomap_server/launch/
 
 # Rebuild workspace
 rm -rf build/ devel/
