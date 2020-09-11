@@ -16,15 +16,13 @@ args = parser.parse_args()
 
 
 # magic number calculated from the min max offset of the waypoints given for ERC2020
+x_offset = 2.53/2.0
 if args.x:
-    x_offset = 2.53/2.0+float(args.x)
-else:
-    x_offset = 2.53/2.0
+    x_offset = x_offset+float(args.x)
 
+y_offset = (30.06+13.24)/2.0-2
 if args.y:
-    y_offset = (30.06+13.24)/2.0-float(args.y)
-else:
-    y_offset = (30.06+13.24)/2.0
+    y_offset = y_offset-float(args.y)
 
 # Mars yard dimensions 36.3 m x 46.3 m
 MARSYARD_WIDTH = 36.3
