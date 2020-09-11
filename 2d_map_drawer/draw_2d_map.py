@@ -1,11 +1,10 @@
 #!/usr/bin/env python2
 
+import sys
+import json
+
 import cv2
 import numpy as np
-import ast
-
-import json
-import sys
 
 # magic number calculated from the min max offset of the waypoints given for ERC2020
 x_offset = 2.53/2.0
@@ -46,6 +45,8 @@ def draw_circles(img, coordinates):
     count = 0
 
     for item in sorted (coordinates.items()):
+            
+            # Print different color for start
             if count == 0:
                 color = (255, 0, 255)
             else:
@@ -58,7 +59,6 @@ def draw_circles(img, coordinates):
     cv2.imwrite('marked_map.jpg', final_map )
     return final_map
 
-
 def draw_grid(img):
 
     final_map = None
@@ -68,8 +68,8 @@ def draw_grid(img):
     
     # White color in BGR
     color = (0, 255, 0)
-    y_step = int(height/43.3)
-    x_step = int(width/36.3)
+    y_step = int(height/MARSYARD_HEIGHT)
+    x_step = int(width/MARSYARD_WIDTH)
     
     # draw vertical
     for step in range(0, width, x_step*5):
@@ -113,10 +113,6 @@ center_coordinates = (mid_x, mid_y)
 
 with open('data.json', 'r') as f:
     datastore = json.load(f)
-
-print(type(datastore))
-
-#sort_json(datastore)
 
 img = draw_circles(img, datastore)
 draw_grid(img)
