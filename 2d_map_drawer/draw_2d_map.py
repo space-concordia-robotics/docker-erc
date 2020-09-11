@@ -24,6 +24,8 @@ y_offset = (30.06+13.24)/2.0-2
 if args.y:
     y_offset = y_offset-float(args.y)
 
+print(x_offset, y_offset)
+
 # Mars yard dimensions 36.3 m x 46.3 m
 MARSYARD_WIDTH = 36.3
 MARSYARD_HEIGHT = 43.3
@@ -89,6 +91,11 @@ def draw_grid(img):
     color = (0, 255, 0)
     y_step = int(height/MARSYARD_HEIGHT)
     x_step = int(width/MARSYARD_WIDTH)
+
+    y_stepy = height/MARSYARD_HEIGHT
+    x_stepy = width/MARSYARD_WIDTH
+    print('x: ', x_stepy)
+    print('y: ', y_stepy)
     
     # draw vertical
     for step in range(0, width, x_step*5):
