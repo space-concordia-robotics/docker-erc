@@ -3,9 +3,10 @@
 git clone https://github.com/space-concordia-robotics/docker-erc.git
 
 # Copy required files to catkin workspace
-cp -r erc_docker_img/src/* /catkin_ws/src/
-cp -r erc_docker_img/map /catkin_ws/map
-cp -r erc_docker_img/leo-erc.repos /catkin_ws/
+cp -r docker-erc/src/* /catkin_ws/src/
+cp -r docker-erc/map /catkin_ws/map
+cp -r docker-erc/leo-erc.repos /catkin_ws/
+cp -r docker-erc/launch /catkin_ws/launch
 
 # Install some basic dependencies
 apt-get update && apt-get -y install \
@@ -21,11 +22,15 @@ apt-get update && apt-get -y install \
   ros-melodic-ar-track-alvar \
   ros-melodic-rqt-graph \
   sl \
+  #imagemagick \
   && rm -rf /var/lib/apt/lists/*
 
 # Clone required repos
 cd /catkin_ws
 vcs import < leo-erc.repos
+
+# Copy required files to cloned repos
+#cp -r docker-erc/controllers.yaml /catkin_ws/src/leo_gazebo/config/
 
 # Rebuild workspace
 rm -rf build/ devel/
