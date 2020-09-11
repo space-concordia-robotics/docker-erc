@@ -30,6 +30,8 @@ def convert_coordinates(coordinates, frame):
     return (int(x),int(y))
 
 def draw_circles(img, coordinates, radius, color, thickness):
+    # TODO: DECLARE PARAMS radius, color, thickness INSIDE
+
     frame = np.array(img, dtype=np.uint8)
     final_map = None
 
@@ -39,11 +41,40 @@ def draw_circles(img, coordinates, radius, color, thickness):
         final_map = cv2.circle(frame, item, radius, color, thickness)
 
     cv2.imwrite('marked_map.jpg', final_map )
+    return final_map
+
+
+def draw_grid(img):
+
+    final_map = None
+
+    # Draw a rectangle with blue line borders of thickness of 2 px
+    thickness = 1
+    
+    # White color in BGR
+    color = (0, 255, 0)
+    y_step = int(height/43.3)
+    x_step = int(width/36.3)
+    
+    # draw vertical
+    for step in range(0, width, x_step*5):
+        starting_point = tuple([step, 0])
+        ending_point = tuple([step, height])
+        final_map = cv2.line(img, starting_point, ending_point, color, thickness)    
+        
+    # draw horizontal
+    for step in range(0, height, y_step*5):
+        starting_point = tuple([0, step])
+        ending_point = tuple([width, step])
+        final_map = cv2.line(img, starting_point, ending_point, color, thickness)    
+         
+    cv2.imwrite('marked_map.jpg', final_map )
+    return final_map
+    #final_map = cv2.line(img, starting_point, ending_point, color, thickness)    
 
 if len(sys.argv) <= 1:
     print('input arg missing: file name')
     sys.exit(1)
-
 input_file = sys.argv[1]
 
 img = cv2.imread(input_file)
@@ -70,5 +101,6 @@ radius = 5
 with open('data.json', 'r') as f:
     datastore = json.load(f)
 
-draw_circles(img, datastore, radius, color, thickness)
+img = draw_circles(img, datastore, radius, color, thickness)
+draw_grid(img)
 
