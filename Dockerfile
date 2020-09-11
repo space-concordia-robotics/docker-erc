@@ -66,23 +66,23 @@ RUN apt update && apt upgrade -y && apt install vim -y
 # allow for AR tags to be inserted into the gazebo world sim
 
 ## install dependencies for gazebo_models generation
-RUN apt-get install imagemagick -y
+##RUN apt-get install imagemagick -y
 
-COPY ar_tags/marsyard.world ./src/marsyard/worlds/
+##COPY ar_tags/marsyard.world ./src/marsyard/worlds/
 
 ## do the thing
 ### HACKY --> ammend later (maybe)
 
-RUN mkdir -p /root/.gazebo/models \
-  && cp -r /catkin_ws/src/gazebo_models/ar_tags/model/marker0/ /root/.gazebo/models \
-  && cd /catkin_ws/src/gazebo_models/ar_tags/images \
-  && mv Marker0.png t \
-  && mkdir -p /root/temp \
-  && mv Marker* /root/temp \
-  && mv t Marker0.png \
-  && cd ../scripts/ \
-  && ./generate_markers_model.py -i ../images/ -s 146 -w 25 \
-  && cp -r /root/.gazebo/models/marker0 /catkin_ws/src/marsyard/models/
+##RUN mkdir -p /root/.gazebo/models \
+##  && cp -r /catkin_ws/src/gazebo_models/ar_tags/model/marker0/ /root/.gazebo/models \
+##  && cd /catkin_ws/src/gazebo_models/ar_tags/images \
+##  && mv Marker0.png t \
+##  && mkdir -p /root/temp \
+##  && mv Marker* /root/temp \
+##  && mv t Marker0.png \
+##  && cd ../scripts/ \
+##  && ./generate_markers_model.py -i ../images/ -s 146 -w 25 \
+##  && cp -r /root/.gazebo/models/marker0 /catkin_ws/src/marsyard/models/
 
 COPY octomap/terrain_mapping.launch /catkin_ws/src/octomap_mapping/octomap_server/launch/
 
