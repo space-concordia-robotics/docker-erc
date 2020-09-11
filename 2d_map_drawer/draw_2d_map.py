@@ -31,13 +31,13 @@ def convert_coordinates(coordinates, frame):
 def draw_circles(img, coordinates):
 
     # Radius of circle
-    radius = 5
+    radius = 30
 
     # Red color in BGR
     color = (0, 0, 255)
 
     # Line thickness of 5 px
-    thickness = 5
+    thickness = 2
 
     frame = np.array(img, dtype=np.uint8)
     final_map = None
@@ -49,11 +49,18 @@ def draw_circles(img, coordinates):
             # Print different color for start
             if count == 0:
                 color = (255, 0, 255)
+            elif count == 15:
+                color = (255, 0, 255)
             else:
                 color = (0, 0, 255)
             item = (item[1][0], item[1][1])
             item = convert_coordinates(item, frame)
             final_map = cv2.circle(frame, item, radius, color, thickness)
+            if count < 10:
+			    final_map = cv2.putText(frame, str(count), (item[0]-10, item[1]+12), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255),2, cv2.LINE_AA)
+            else:
+			    final_map = cv2.putText(frame, str(count), (item[0]-22, item[1]+12), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255),2, cv2.LINE_AA)
+                
             count += 1
 
     cv2.imwrite('marked_map.jpg', final_map )
@@ -75,16 +82,26 @@ def draw_grid(img):
     for step in range(0, width, x_step*5):
         starting_point = tuple([step, 0])
         ending_point = tuple([step, height])
-        final_map = cv2.line(img, starting_point, ending_point, color, thickness)    
+        final_map = cv2.line(img, starting_point, ending_point, color, thickness)
+        final_map = cv2.putText(img, str(step/x_step), (step+1, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0),1, cv2.LINE_AA)
         
     # draw horizontal
     for step in range(0, height, y_step*5):
         starting_point = tuple([0, step])
         ending_point = tuple([width, step])
-        final_map = cv2.line(img, starting_point, ending_point, color, thickness)    
+        final_map = cv2.line(img, starting_point, ending_point, color, thickness) 
+        final_map = cv2.putText(img, str(step/y_step), (5, step-1), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0),1, cv2.LINE_AA)
+    thickness = 2
+    color = (255, 255, 0) 
+    final_map = cv2.line(img, tuple([0,0]), tuple([0, height]), color, thickness)
+    final_map = cv2.line(img, tuple([width-thickness,0]), tuple([width-thickness, height]), color, thickness)
+    final_map = cv2.line(img, tuple([0, 0]), tuple([height, 0]), color, thickness)
+    final_map = cv2.line(img, tuple([0, height-thickness]), tuple([height, height-thickness]), color, thickness)
          
     cv2.imwrite('marked_map.jpg', final_map )
     return final_map
+
+
 
 if len(sys.argv) <= 1:
     print('input arg missing: file name')
