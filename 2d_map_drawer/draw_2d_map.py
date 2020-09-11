@@ -1,14 +1,33 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys
 import json
+import argparse
 
 import cv2
 import numpy as np
 
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-map', help='path to map')
+parser.add_argument('-x', help='add to x offset')
+parser.add_argument('-y', help='add to y offset')
+args = parser.parse_args()
+
+print(dir(args))
+
+
+
 # magic number calculated from the min max offset of the waypoints given for ERC2020
-x_offset = 2.53/2.0
-y_offset = (30.06+13.24)/2.0
+if args.x:
+    x_offset = 2.53/2.0+float(args.x)
+else:
+    x_offset = 2.53/2.0
+
+if args.y:
+    y_offset = (30.06+13.24)/2.0+float(args.y)
+else:
+    y_offset = (30.06+13.24)/2.0
 
 # Mars yard dimensions 36.3 m x 46.3 m
 MARSYARD_WIDTH = 36.3
@@ -57,9 +76,9 @@ def draw_circles(img, coordinates):
             item = convert_coordinates(item, frame)
             final_map = cv2.circle(frame, item, radius, color, thickness)
             if count < 10:
-			    final_map = cv2.putText(frame, str(count), (item[0]-10, item[1]+12), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255),2, cv2.LINE_AA)
+                final_map = cv2.putText(frame, str(count), (item[0]-10, item[1]+12), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255),2, cv2.LINE_AA)
             else:
-			    final_map = cv2.putText(frame, str(count), (item[0]-22, item[1]+12), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255),2, cv2.LINE_AA)
+                final_map = cv2.putText(frame, str(count), (item[0]-22, item[1]+12), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255),2, cv2.LINE_AA)
                 
             count += 1
 
@@ -106,7 +125,8 @@ def draw_grid(img):
 if len(sys.argv) <= 1:
     print('input arg missing: file name')
     sys.exit(1)
-input_file = sys.argv[1]
+#input_file = sys.argv[1]
+input_file = args.map
     
 img = cv2.imread(input_file)
 
