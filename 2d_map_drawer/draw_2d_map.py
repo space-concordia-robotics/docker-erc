@@ -8,9 +8,8 @@ import json
 import sys
 
 def convert_coordinates(coordinates, frame):
-    #magic number calculated from the min max offset of the waypoints given for ERC2020
+    # magic number calculated from the min max offset of the waypoints given for ERC2020
     x_offset = 2.53/2.0
-    #y_offset = (23.89+13.24)/2.0
     y_offset = (30.06+13.24)/2.0
     FRAME_HEIGHT = frame.shape[0]
     FRAME_WIDTH = frame.shape[1]
@@ -20,10 +19,12 @@ def convert_coordinates(coordinates, frame):
     y = coordinates[1]
     x = float(x)
     y = float(y)
+    print('------------INPUT--------------')
     print('x:', x)
     print('y:', y)
     x = (x+x_offset)/(MARSYARD_WIDTH) * FRAME_WIDTH
     y = (y+y_offset)/(MARSYARD_HEIGHT) * FRAME_HEIGHT
+    print('------------OUTPUT--------------')
     print('x', x)
     print('y', y)
     return (int(x),int(y))
@@ -35,17 +36,8 @@ def draw_circles(img, coordinates, radius, color, thickness):
     for item in coordinates.items():
         item = (item[1][0], item[1][1])
         item = convert_coordinates(item, frame)
-        # ADD CORRECTION SHIFT
-        #item[1][0] = 
-        #item[1][1] =
-        print(item)
         final_map = cv2.circle(frame, item, radius, color, thickness)
 
-    #print('coordinates.items()[1]:', coordinates.items()[1])
-    #print('type --> :', coordinates.items()[1])
-
-    #final_map = cv2.circle(frame, coordinates[0][1], radius, color, thickness)
-    # save image
     cv2.imwrite('marked_map.jpg', final_map )
 
 if len(sys.argv) <= 1:
@@ -54,7 +46,6 @@ if len(sys.argv) <= 1:
 
 input_file = sys.argv[1]
 
-#Reading images in color and grayscale
 img = cv2.imread(input_file)
 
 # convert the image to a numpy array since most cv2 functions
@@ -76,27 +67,8 @@ mid_y = height/2
 center_coordinates = (mid_x, mid_y)
 radius = 5
 
-# test data
-
-#test_data = {'one':(mid_x, mid_y), 'two':(mid_x + mid_x/2, mid_y + mid_y/2)}
-
-final_map = None
-
 with open('data.json', 'r') as f:
     datastore = json.load(f)
 
-#print('dir', dir(datastore))
-
 draw_circles(img, datastore, radius, color, thickness)
-
-'''
-# Draw a rectangle with blue line borders of thickness of 2 px
-for item in test_data.items():
-    print('item[1]', item[1])
-    print('item[1][0]', item[1][0])
-    # ADD CORRECTION SHIFT
-    #item[1][0] = 
-    #item[1][1] = 
-    final_map = cv2.circle(frame, item[1], radius, color, thickness)
-'''
 
