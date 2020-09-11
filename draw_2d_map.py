@@ -22,23 +22,20 @@ shape = frame.shape
 height = shape[0]
 width = shape[1]
 
-# Starting coordinate
-# Represents the top left corner of rectangle
-starting_point = (width/2 - width/5, height/2 - height/5)
-
-# Ending coordinate
-# Represents the bottom right corner of rectangle
-ending_point = (width/2 + width/5, height/2 + width/5)
-
 # Red color in BGR
 color = (0, 0, 255)
 
 # Line thickness of 2 px
-thickness = 2
+thickness = 5
+
+mid_x = width/2
+mid_y = height/2
+center_coordinates = (mid_x, mid_y)
+radius = 5
 
 # Draw a rectangle with blue line borders of thickness of 2 px
-final_map = cv2.rectangle(frame, starting_point, ending_point, color, thickness)
-
+#final_map = cv2.rectangle(frame, starting_point, ending_point, color, thickness)
+final_map = cv2.circle(frame, center_coordinates, radius, color, thickness)
 
 # save image
 cv2.imwrite('marked_map.jpg', final_map )
