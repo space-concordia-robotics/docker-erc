@@ -1,4 +1,9 @@
 #!/bin/bash
+# arg1: github username
+# arg2: github email
+
+git config --global user.name "$1"
+git config --global user.email "$2"
 
 git clone https://github.com/space-concordia-robotics/docker-erc.git
 
