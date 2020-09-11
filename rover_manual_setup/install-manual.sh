@@ -6,6 +6,7 @@ git clone https://github.com/space-concordia-robotics/docker-erc.git
 cp -r docker-erc/src/* /catkin_ws/src/
 cp -r docker-erc/map /catkin_ws/map
 cp -r docker-erc/leo-erc.repos /catkin_ws/
+cp -r docker-erc/launch /catkin_ws/launch
 
 # Install some basic dependencies
 apt-get update && apt-get -y install \
