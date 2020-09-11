@@ -27,7 +27,7 @@ repositories:
 #    type: git
 #    url: https://github.com/mikaelarguedas/gazebo_models.git
 #    version: master
-  src/octomap_mapping:
-    type: git
-    url: https://github.com/OctoMap/octomap_mapping.git
-    version: kinetic-devel
+#  src/octomap_mapping:
+#    type: git
+#    url: https://github.com/OctoMap/octomap_mapping.git
+#    version: kinetic-devel
